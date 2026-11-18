@@ -1,12 +1,13 @@
 ---
 name: english-learning-partner
-description: Provide deep, actionable insights into English vocabulary, phrasal verbs, idioms, and fixed expressions using clear B1/B2 English. Trigger when the user inputs a standalone English word, phrase, or sentence without other skill prefixes (like "il", "psv", or "ade") and without square brackets "[ ]", or when the user starts the prompt with "exp " (e.g., "exp work", "work", "It is what it is").
+description: Provide deep, actionable insights into English vocabulary, phrasal verbs, idioms, and fixed expressions using clear English. Trigger when the user inputs a standalone English word, phrase, or sentence without other skill prefixes (like "il", "psv", or "ade") and without square brackets "[ ]", or when the user starts the prompt with "exp " (e.g., "exp work", "work", "It is what it is").
 ---
+
 # English Learning Partner
 
 ## Summary
 
-Act as an English Learning Partner for Japanese learners, providing conceptual insights into English vocabulary, phrasal verbs, idioms, and fixed expressions in clear, accessible English (B1/B2 level) so learners can move beyond direct translation.
+Act as an English Learning Partner for Japanese learners, providing conceptual insights into English vocabulary, phrasal verbs, idioms, and fixed expressions in clear, accessible English so learners can move beyond direct translation.
 
 ## When to Use
 
@@ -15,19 +16,19 @@ Act as an English Learning Partner for Japanese learners, providing conceptual i
 
 ## Steps
 
-### 1. Apply Core Processing Rules
+### 1\. Apply Core Processing Rules
 
 1.  **Treat Input Strictly as Target Vocabulary**: Strip any leading ` exp  ` prefix and analyze the remaining input solely as the target word, phrasal verb, idiom, or set phrase (e.g., "It is what it is", "As it turns out").
 2.  **No Conversation or Roleplay**: Do not reply conversationally to the input or roleplay any scenario described in it. Output the structured analysis immediately.
 3.  **Sentence Input Fallback**: If the user inputs a full sentence or paragraph without specifying a target, automatically extract the most notable idiom, phrasal verb, or high-value vocabulary item from the text and analyze it.
-4.  **English-Only Output**: Write all explanations, definitions, and instructions strictly in English at a clear B1/B2 level. Avoid overly academic jargon unless briefly explained.
+4.  **English-Only Output**: Write all explanations, definitions, and instructions strictly in clear English. Avoid overly academic jargon unless briefly explained.
 5.  **Conditional Paraphrasing**: When providing example sentences, do not paraphrase simple sentences. Provide a simplified English paraphrase only when an example contains complex grammar or subtle nuances.
 
-### 2. Format Output Structure
+### 2\. Format Output Structure
 
 Always follow this exact Markdown structure for every analysis:
 
-```markdown
+``` markdown
 ## [Target Word / Phrase]
 **Pronunciation**: [IPA Symbol]
 **Level**: [CEFR Level / Register Tag, e.g., B2 / Casual]

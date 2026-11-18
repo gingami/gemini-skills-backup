@@ -2,6 +2,7 @@
 name: anki-toeic
 description: Convert uploaded images of TOEIC Part 1, Part 2, Part 3, Part 4, or Part 5 questions, scripts, and explanations into English Pipe-Separated Values (PSV) format for Anki import. Trigger whenever the user uploads TOEIC book or test page images (optionally specifying question numbers like "1, 3" or "only 62, 63") or asks to convert TOEIC materials into Anki PSV.
 ---
+
 # Anki TOEIC
 
 ## Summary
@@ -14,27 +15,27 @@ Analyze uploaded images of TOEIC Part 1, Part 2, Part 3, Part 4, or Part 5 quest
 
 ## Steps
 
-### 1. Detect Part & Select Questions
+### 1\. Detect Part & Select Questions
 
   - Automatically detect whether the uploaded image belongs to **Part 1** (Photographs), **Part 2** (Question-Response), **Part 3** (Conversations, Q32-70), **Part 4** (Talks, Q71-100), or **Part 5** (Incomplete Sentences).
   - **Question Selection Rule**:
       - For Parts 1, 2, and 5: If the user specifies question numbers (e.g., `1, 3` or `119`), process and output ONLY those specified questions. Otherwise, output ALL visible questions in numerical order.
       - For Parts 3 and 4: Each conversation/talk set (typically 3 questions) forms a SINGLE PSV row. By default, populate all 3 questions in `Q1_Block`, `Q2_Block`, and `Q3_Block`. If the user specifies particular question numbers (e.g., `only 62, 63`), populate ONLY the corresponding block(s) and leave unselected `Q_Block` field(s) completely empty (represented by adjacent pipes `||`).
 
-### 2. Apply Global Output Format Rules
+### 2\. Apply Global Output Format Rules
 
 1.  **Code Block Only**: Output ONLY a single plain-text (`text`) code block containing the 4 Anki header lines and PSV rows. Do NOT include greetings, explanations, or filler outside the code block.
 2.  **English-Only Content**: All output text across all fields must be in English. Translate and adapt any Japanese explanations or vocabulary notes into concise, natural English.
 3.  **Single-Line & HTML Formatting**: Output one record per line using `|` as the delimiter. Never use literal line breaks or `|` inside any field content. Use HTML tags (`<br>`, `<ul>`, `<li>`, `<b>`) for internal formatting.
 4.  **Clean Metadata**: Ignore printed question numbers (except where required in Part 3/4 fields), CD/track numbers, circled clue numbers, nationality flag icons, and speaker gender markers (except `[M]`/`[W]` in Part 3/4 `Script`).
 
-### 3. Apply Part-Specific Headers & Field Schemas
+### 3\. Apply Part-Specific Headers & Field Schemas
 
 #### Part 1 (Photographs - 9 Output Columns)
 
 Headers:
 
-```text
+``` text
 #notetype: TOEIC_Part1
 #deck: 3. TOEIC::Part1
 #separator: Pipe
@@ -57,7 +58,7 @@ Row Rule: Start directly with `|` (`Note ID` blank) and end immediately after Fi
 
 Headers:
 
-```text
+``` text
 #notetype: TOEIC_Part2
 #deck: 3. TOEIC::Part2
 #separator: Pipe
@@ -81,7 +82,7 @@ Row Rule: Start directly with `|` (`Note ID` blank) and end with a trailing `|` 
 
 Headers:
 
-```text
+``` text
 #notetype: TOEIC_Part3_4
 #deck: 3. TOEIC::Part3
 #separator: Pipe
@@ -106,7 +107,7 @@ Row Rule: Output ONE line per 3-question set. Start with `|` (`Note ID` blank) a
 
 Headers:
 
-```text
+``` text
 #notetype: TOEIC_Part5
 #deck: 3. TOEIC::Part5
 #separator: Pipe

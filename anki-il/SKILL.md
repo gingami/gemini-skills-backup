@@ -2,6 +2,7 @@
 name: anki-il
 description: Generate Anki Immersion Learning (IL) 16:9 educational flashcard images (image-only via "il ") or simultaneous Pipe-Separated Values (PSV) flashcard data and 16:9 flashcard images (via "psv " or English sentences with square brackets "[ ]" around target words). Also supports "psv" or "image" as a follow-up in an Anki IL session.
 ---
+
 # Anki IL
 
 ## Summary
@@ -11,10 +12,10 @@ Generate minimalist 16:9 split-canvas educational flashcard images only (Mode A)
 ## When to Use
 
   - **Mode A (Flashcard Image-Only Generation — No PSV)**:
-      - The user starts the input with `il ` followed by a word or phrase (e.g., `il work`). Do NOT generate PSV data in this mode.
+      - The user starts the input with ` il  ` followed by a word or phrase (e.g., `il work`). Do NOT generate PSV data in this mode.
       - The user types `image` immediately after generating an Anki IL PSV row or image to generate/regenerate only the 16:9 illustration.
   - **Mode B (Simultaneous PSV Data + 16:9 Image Generation)**:
-      - The user starts the input with `psv ` followed by a word, phrase, or list (e.g., `psv work`).
+      - The user starts the input with ` psv  ` followed by a word, phrase, or list (e.g., `psv work`).
       - The user inputs one or more English sentences containing square brackets `[ ]` marking target expressions (e.g., `Hard [work] always pays off.`, `I [ran into] my old friend.`).
       - Output BOTH the PSV code block AND the 16:9 flashcard illustration(s) simultaneously in the same turn.
   - **PSV-Only Follow-up (`psv`)**:
@@ -26,7 +27,7 @@ Generate minimalist 16:9 split-canvas educational flashcard images only (Mode A)
 
 Execute the following steps sequentially without asking unnecessary questions, and do NOT output PSV data:
 
-1.  **Normalize Input**: Strip any leading `il ` prefix. Identify the target English word or phrase and retain its base/dictionary form for the flashcard header. If the word has multiple meanings, select the most frequent everyday usage unless context is specified.
+1.  **Normalize Input**: Strip any leading ` il  ` prefix. Identify the target English word or phrase and retain its base/dictionary form for the flashcard header. If the word has multiple meanings, select the most frequent everyday usage unless context is specified.
 2.  **Formulate Example Sentence**:
       - Write a natural English example reflecting a realistic, practical situation (or reuse the sentence from the previous turn if triggered via follow-up `image`).
       - **Inflection & Usage Priority**: Freely inflect or adapt the target word (past tense, passive voice, progressive aspect, third-person singular, or plural) whenever it makes the sentence more authentic.
@@ -39,7 +40,9 @@ Execute the following steps sequentially without asking unnecessary questions, a
 4.  **Generate Image**:
       - Call the image generation tool with a 16:9 aspect ratio by default. Do not output the raw prompt text in the chat response. Use this exact prompt structure:
 
-```text
+<!-- end list -->
+
+``` text
 A minimalist, flat vector-style educational illustration depicting: [Specific visual description of the scenario from Step 3, with a soft solid background color and no text inside the artwork].
 Composition & Layout: 16:9 widescreen aspect ratio, split-canvas flashcard layout. The upper 80% is an edge-to-edge illustration with no borders on the top, left, or right. The bottom 20% is a stark white horizontal footer margin clearly separated from the upper artwork.
 Typography: Centered inside the bottom white margin, print crisp, legible black text in a clean sans-serif font.
@@ -54,12 +57,14 @@ When triggered by `psv ...` or bracketed input `[ ]`, execute **both** Part 1 (P
 
 #### Part 1: Construct PSV Data
 
-##### 1. Output Constraints
+##### 1\. Output Constraints
 
   - **Code Block Only (for text portion)**: Output ONLY a single `text` code block for the PSV data. Do not include greetings, explanations, or conversational filler outside the code block.
   - **Mandatory File Headers**: The first four lines inside the code block must be exact:
 
-```text
+<!-- end list -->
+
+``` text
 #notetype: ImmersionLearning
 #deck: 1. Immersion Learning
 #separator: Pipe
@@ -70,11 +75,11 @@ When triggered by `psv ...` or bracketed input `[ ]`, execute **both** Part 1 (P
   - **Delimiter Integrity**: Use `|` (pipe) as the delimiter. Never include literal `|` characters inside any field content.
   - **Pipe Count**: Every data row must start with `|` (representing the empty `Note ID` field) and contain 7 pipes total across the 8 populated fields, terminating immediately after `CEFR` with no trailing pipes for empty fields 9-11 (`|Expression|IPA|POS|Definition|Synonyms|Example|CEFR`).
 
-##### 2. Processing & Linguistic Rules
+##### 2\. Processing & Linguistic Rules
 
   - **Target Extraction & Grouping**:
       - **Bracketed Input (`[ ]`)**: Extract phrases enclosed in square brackets. If multiple brackets in a single sentence belong to one split expression (e.g., `Don't [take] his kindness [for granted].`), combine them into a single row (`take sth for granted`) and wrap each part separately in `<B><U>...</U></B>` in the example sentence. If a sentence contains distinct targets, generate one row per unique target and strip `[ ]` from non-target words in that row.
-      - **Unbracketed Input (`psv ...`)**: Strip the leading `psv ` prefix and treat each standalone word or phrase (or the previous turn's Mode A card) as a target expression.
+      - **Unbracketed Input (`psv ...`)**: Strip the leading ` psv  ` prefix and treat each standalone word or phrase (or the previous turn's Mode A card) as a target expression.
   - **Lemmatization (`Expression`)**:
       - Convert verbs to base dictionary form (e.g., `ran into` -> `run into sb`).
       - Standardize generalized objects using `sb` (someone) and `sth` (something) based on transitivity and context (e.g., `take sth for granted`).
@@ -89,7 +94,7 @@ When triggered by `psv ...` or bracketed input `[ ]`, execute **both** Part 1 (P
       - Retain the user's sentence (silently fixing minor grammar/spelling errors) or generate one natural sentence for standalone inputs.
       - Wrap ONLY the target word(s) in `<B><U>...</U></B>` tags matching the inflected form in the sentence.
 
-##### 3. Column Schema & Examples
+##### 3\. Column Schema & Examples
 
 1.  `Note ID`: Leave empty (row begins with `|`).
 2.  `Expression`: Lemmatized target with `sb`/`sth`/`be`.
@@ -103,7 +108,7 @@ When triggered by `psv ...` or bracketed input `[ ]`, execute **both** Part 1 (P
 
 Example Output:
 
-```text
+``` text
 #notetype: ImmersionLearning
 #deck: 1. Immersion Learning
 #separator: Pipe

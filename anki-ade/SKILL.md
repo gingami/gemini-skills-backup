@@ -2,6 +2,7 @@
 name: anki-ade
 description: "Generate Anki Active Daily English (ADE) Cloze-deletion Pipe-Separated Values (PSV) flashcards AND 16:9 storybook-style context illustrations simultaneously in a single turn. Trigger when the user starts input with \"ade \" (e.g., \"ade work\", \"ade run out of\") or inputs \"image\" to regenerate an illustration."
 ---
+
 # Anki ADE
 
 ## Summary
@@ -15,13 +16,15 @@ Generate both an import-ready Cloze-deletion Anki flashcard in Pipe-Separated Va
 
 ## Steps
 
-### 1. Construct PSV Data (10 Fields)
+### 1\. Construct PSV Data (10 Fields)
 
 1.  **Format the Code Block**:
       - Enclose the PSV output in a single `text` code block with no conversational filler, greetings, or explanations outside the code block.
       - Always place these exact four lines at the top of the code block:
 
-```text
+<!-- end list -->
+
+``` text
 #notetype: ActiveDailyEnglish
 #deck: 2. Active Daily English
 #separator: Pipe
@@ -31,6 +34,8 @@ Generate both an import-ready Cloze-deletion Anki flashcard in Pipe-Separated Va
   - Use a single vertical pipe `|` between fields. Never use pipe characters `|` or literal line breaks inside any field value.
   - Start every data row with a single pipe `|` (representing the empty `Note ID` field), immediately followed by Field 2 (`Expression`).
   - If Field 10 (`Extra`) contains text, separate it with `|` and do not add a trailing pipe after it. If Field 10 (`Extra`) is empty, omit the pipe after Field 9 (`Answer`) so the line ends immediately after `Answer`.
+
+<!-- end list -->
 
 2.  **Populate the 10 Fields in Strict Order**:
     1.  **Note ID**: Leave blank (represented solely by the leading `|`).
@@ -48,7 +53,7 @@ Generate both an import-ready Cloze-deletion Anki flashcard in Pipe-Separated Va
     9.  **Answer** *(Full Sentence)*: Output the exact same text as `Text`, with the cloze markup removed and the target inflected phrase wrapped in `<b>...</b>` tags (e.g., `She <b>stood up for</b> her rights explicitly.`).
     10. **Extra** *(Optional)*: Include high-value supplementary notes such as grammar tips, common collocations, antonyms, or etymology. If nothing meaningful adds value, leave blank and omit the pipe after `Answer`.
 
-### 2. Generate 16:9 Context Illustration (Simultaneously in the Same Turn)
+### 2\. Generate 16:9 Context Illustration (Simultaneously in the Same Turn)
 
 In the same turn as constructing the PSV data, invoke the image generation tool to generate the illustration based on the `Text` and `Hint` fields:
 
@@ -61,9 +66,9 @@ In the same turn as constructing the PSV data, invoke the image generation tool 
       - Assign bubbles strictly to the active speaker or thinker, never to passive listeners.
   - **No Text Rule**: Keep all bubbles completely blank. Never generate any letters, words, or symbols inside bubbles or anywhere in the image.
 
-### 3. Reference Examples
+### 3\. Reference Examples
 
-```text
+``` text
 #notetype: ActiveDailyEnglish
 #deck: 2. Active Daily English
 #separator: Pipe
